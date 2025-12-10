@@ -88,34 +88,41 @@ def find_min(weather_data):
     #2. Find it's position/index in list
     #3. Return value and position
     #Ensure we're working with floats
-    #Ensure you've considered empty lists
-    if len(weather_data) == 0:
+    if not weather_data:
         return ()
-    weather_data_float = [float(value) for value in weather_data]
-    minimum_value = weather_data_float[0]
+    
+    minimum_value = float(weather_data[0])
     minimum_index = 0
-    for index, value in enumerate(weather_data_float):
+
+    for index, value in enumerate(weather_data):
+        value = float(value)
         if value <= minimum_value:
             minimum_value = value
             minimum_index = index
+    
     return minimum_value, minimum_index
 
 
 def find_max(weather_data):
-    """Calculates the maximum value in a list of numbers.    Args:
+    """Calculates the maximum value in a list of numbers.
+
+    Args:
         weather_data: A list of numbers.
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    if len(weather_data) == 0:
+    if not weather_data:
         return ()
-    weather_data_float = [float(value) for value in weather_data]
-    maximum_value = weather_data_float[0]
+
+    maximum_value = float(weather_data[0])
     maximum_index = 0
-    for index, value in enumerate(weather_data_float):
+
+    for index, value in enumerate(weather_data):
+        value = float(value)
         if value >= maximum_value:
             maximum_value = value
             maximum_index = index
+
     return maximum_value, maximum_index
 
 
@@ -127,37 +134,12 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    #summary should include:
-    #Lowest temperature and the date it occurs (The lowest temperature will be 8.3°C, and will occur on Friday 19 June 2020.)
-    #Highest temperature and the date it occurs (The highest temperature will be 22.2°C, and will occur on Sunday 21 June 2020.)
-    #Average low temperature (The average low this week is 11.4°C.)
-    #Average high temperature (The average high this week is 18.8°C.)
+    for rows in weather_data:
+        date = convert_date(rows[0])
+        min_weather = rows[1]
+        max_weather = rows[2]
+        return (f"The lowest temperature will be {min_weather}, and will occur on {date}. The highest temperature will be {max_weather}, and will occur on {date}.")
 
-    #steps:
-    #extract high and low temperatures into separate lists
-    #find the highest and lowest temperatures in respective lists AND the date they occur
-    #calculate average high and low temperatures
-    #format the string
-    #don't forget to convert to celsius
-    
-    high_temps_list = [row [2] for row in weather_data]
-    low_temps_list = [row [1] for row in weather_data]
-    min_temp, min_index = find_min(low_temps_list)
-    max_temp, max_index = find_max(high_temps_list)
-    min_temp_celsius = convert_f_to_c(min_temp)
-    max_temp_celsius = convert_f_to_c(max_temp)
-    min_temp_date = convert_date(weather_data[min_index][0])
-    max_temp_date = convert_date(weather_data[max_index][0])
-    high_mean = calculate_mean(high_temps_list)
-    high_mean_celsius = convert_f_to_c(high_mean)
-    low_mean = calculate_mean(low_temps_list)
-    low_mean_celsius = convert_f_to_c(low_mean)
-    days = len(weather_data)
-    return (f"{days} Day Overview\n"
-            f"  The lowest temperature will be {min_temp_celsius}{DEGREE_SYMBOL}, and will occur on {min_temp_date}.\n"
-            f"  The highest temperature will be {max_temp_celsius}{DEGREE_SYMBOL}, and will occur on {max_temp_date}.\n"
-            f"  The average low this week is {low_mean_celsius}{DEGREE_SYMBOL}.\n"
-            f"  The average high this week is {high_mean_celsius}{DEGREE_SYMBOL}.")
 
 
 def generate_daily_summary(weather_data):
