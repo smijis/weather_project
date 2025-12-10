@@ -1,0 +1,2 @@
+from weather import find_min
+print(type(maximum_value))
