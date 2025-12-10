@@ -168,4 +168,15 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    
+    #convert dates into readable format
+    #convert temps into celsius
+    #print each line with the new dates and new temps (min temp, max temp)
+
+    for each_row in weather_data:
+        date = each_row[0]
+        readable_date = convert_date(date)
+        min_temp = convert_f_to_c(each_row[1])
+        max_temp = convert_f_to_c(each_row[2])
+    return (f"{readable_date}\n"
+            f"Minimum Temperature: {min_temp}{DEGREE_SYMBOL}\n" 
+            f"Maximum Temperature: {max_temp}{DEGREE_SYMBOL}")
