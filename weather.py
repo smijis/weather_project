@@ -140,8 +140,8 @@ def generate_summary(weather_data):
     #format the string
     #don't forget to convert to celsius
     
-    high_temps_list = [row [2] for row in weather_data]
-    low_temps_list = [row [1] for row in weather_data]
+    high_temps_list = [row[2] for row in weather_data]
+    low_temps_list = [row[1] for row in weather_data]
     min_temp, min_index = find_min(low_temps_list)
     max_temp, max_index = find_max(high_temps_list)
     min_temp_celsius = convert_f_to_c(min_temp)
@@ -157,7 +157,7 @@ def generate_summary(weather_data):
             f"  The lowest temperature will be {min_temp_celsius}{DEGREE_SYMBOL}, and will occur on {min_temp_date}.\n"
             f"  The highest temperature will be {max_temp_celsius}{DEGREE_SYMBOL}, and will occur on {max_temp_date}.\n"
             f"  The average low this week is {low_mean_celsius}{DEGREE_SYMBOL}.\n"
-            f"  The average high this week is {high_mean_celsius}{DEGREE_SYMBOL}.")
+            f"  The average high this week is {high_mean_celsius}{DEGREE_SYMBOL}.\n")
 
 
 def generate_daily_summary(weather_data):
@@ -171,12 +171,13 @@ def generate_daily_summary(weather_data):
     #convert dates into readable format
     #convert temps into celsius
     #print each line with the new dates and new temps (min temp, max temp)
-
+    
+    #create a new list and append the string with a new string every time
+    string = ""
     for each_row in weather_data:
         date = each_row[0]
         readable_date = convert_date(date)
         min_temp = convert_f_to_c(each_row[1])
         max_temp = convert_f_to_c(each_row[2])
-    return (f"{readable_date}\n"
-            f"Minimum Temperature: {min_temp}{DEGREE_SYMBOL}\n" 
-            f"Maximum Temperature: {max_temp}{DEGREE_SYMBOL}")
+        string = string + f"---- {readable_date} ----\n  Minimum Temperature: {min_temp}{DEGREE_SYMBOL}\n  Maximum Temperature: {max_temp}{DEGREE_SYMBOL}\n\n"
+    return string
